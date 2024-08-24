@@ -55,8 +55,8 @@
                 echo "🚀 Using remote build-host"
               '' else ""
               ) + (if remote then ''
-                echo "🚀 Sending flake to ${machine} on ${buildHost} via nix copy:"
-                ( set -x; ${nix} ${nixOptions} copy ${flake} --to ssh://${user}@${buildHost} )
+                echo "🚀 Sending flake to ${machine} on ${host} via nix copy:"
+                ( set -x; ${nix} ${nixOptions} copy ${flake} --to ssh://${user}@${host} )
               '' + (if hermetic then ''
                 echo "🤞 Activating configuration hermetically on ${machine} via ssh:"
                 ( set -x; ${nix} ${nixOptions} copy --derivation ${nixos-rebuild} ${flock} --to ssh://${user}@${host} )
