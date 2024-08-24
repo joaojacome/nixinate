@@ -53,7 +53,8 @@
                 echo "🌐 SSH Host: ${host}"
               '' + (if (host!=buildHost) then ''
                 echo "🚀 Using remote build-host"
-              ''+ (if remote then ''
+              '' else ""
+              ) + (if remote then ''
                 echo "🚀 Sending flake to ${machine} on ${buildHost} via nix copy:"
                 ( set -x; ${nix} ${nixOptions} copy ${flake} --to ssh://${user}@${buildHost} )
               '' + (if hermetic then ''
