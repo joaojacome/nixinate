@@ -67,7 +67,7 @@
               '')
               else ''
                 echo "🔨 Building system closure locally, copying it to remote store and activating it:"
-                ( set -x; NIX_SSHOPTS="-T -A" ${flock} -w 60 /dev/shm/nixinate-${machine} ${nixos-rebuild} ${nixOptions} ${switch} --flake ${flake}#${machine} ${optionalString (host!=buildHost) "--build-host ${user}@${buildHost}"} --target-host ${user}@${host} --use-remote-sudo ${optionalString substituteOnTarget "-s"} )
+                ( set -x; NIX_SSHOPTS="-o StrictHostKeychecking=no -T -A" ${flock} -w 60 /dev/shm/nixinate-${machine} ${nixos-rebuild} ${nixOptions} ${switch} --flake ${flake}#${machine} ${optionalString (host!=buildHost) "--build-host ${user}@${buildHost}"} --target-host ${user}@${host} --use-remote-sudo ${optionalString substituteOnTarget "-s"} )
 
               '');
             in final.writeShellScript "deploy-${machine}.sh" script;
