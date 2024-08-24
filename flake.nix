@@ -51,8 +51,10 @@
                 echo "🚀 Deploying nixosConfigurations.${machine} from ${flake}"
                 echo "👤 SSH User: ${user}"
                 echo "🌐 SSH Host: ${host}"
-              '' + (if remote then ''
-                echo "🚀 Sending flake to ${machine} via nix copy:"
+              '' + (if (host!=buildHost) then ''
+                echo "🚀 Using remote build-host"
+              ''+ (if remote then ''
+                echo "🚀 Sending flake to ${machine} on ${buildHost} via nix copy:"
                 ( set -x; ${nix} ${nixOptions} copy ${flake} --to ssh://${user}@${buildHost} )
               '' + (if hermetic then ''
                 echo "🤞 Activating configuration hermetically on ${machine} via ssh:"
